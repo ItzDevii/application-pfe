@@ -18,11 +18,11 @@ public class Participation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "activity_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "activity_id")
     private Activity activity;
 }

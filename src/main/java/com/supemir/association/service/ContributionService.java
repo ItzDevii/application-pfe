@@ -4,10 +4,14 @@ import com.supemir.association.dto.ContributionDto;
 
 import java.util.List;
 
-public interface CotisationService {
-    ContributionDto create(ContributionDto dto);
-    ContributionDto update(Long id, ContributionDto dto);
-    void delete(Long id);
-    ContributionDto getById(Long id);
+public interface ContributionService {
     List<ContributionDto> getAll();
+
+    ContributionDto getById(Long id);
+
+    ContributionDto create(ContributionDto contributionDto);
+
+    ContributionDto update(Long id, ContributionDto contributionDto);
+
+    void delete(Long id);
 }

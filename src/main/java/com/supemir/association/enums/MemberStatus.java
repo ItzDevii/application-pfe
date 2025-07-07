@@ -1,5 +1,5 @@
 package com.supemir.association.enums;
 
-public enum Status {
+public enum MemberStatus {
     ACTIVE, INACTIVE, SUSPENDED
 }

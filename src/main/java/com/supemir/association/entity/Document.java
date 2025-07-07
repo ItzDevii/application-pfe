@@ -18,9 +18,13 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
+    private String name;
 
-    @Column(nullable = false)
+    private String type;
+
     private String path;
+
+    @ManyToOne
+    @JoinColumn(name = "uploaded_by")
+    private User uploadedBy;
 }

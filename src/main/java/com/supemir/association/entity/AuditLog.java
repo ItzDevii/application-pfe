@@ -20,18 +20,13 @@ public class AuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "action", nullable = false)
     private String action;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    private String targetEntity;
 
-    @Column(name = "entity", nullable = false)
-    private String entity;
-
-    @Column(name = "entity_id", nullable = false)
-    private Long entityId;
-
-    @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

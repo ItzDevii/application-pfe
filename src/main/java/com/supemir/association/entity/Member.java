@@ -1,6 +1,6 @@
 package com.supemir.association.entity;
 
-import com.supemir.association.enums.Status;
+import com.supemir.association.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +30,11 @@ public class Member {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    @Column(name = "status")
+    private MemberStatus memberStatus;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

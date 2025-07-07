@@ -1,12 +1,15 @@
 package com.supemir.association.service;
 
-import com.supemir.association.entity.AuditLog;
+import com.supemir.association.dto.AuditLogDto;
 
 import java.util.List;
 
 public interface AuditLogService {
-    AuditLog createAuditLog(AuditLog auditLog);
-    List<AuditLog> getAllAuditLogs();
-    AuditLog getAuditLogById(Long id);
-    void deleteAuditLog(Long id);
+    List<AuditLogDto> getAll();
+
+    AuditLogDto getById(Long id);
+
+    AuditLogDto create(AuditLogDto auditLogDto);
+
+    void delete(Long id);
 }
