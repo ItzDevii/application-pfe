@@ -5,13 +5,9 @@ import com.supemir.association.dto.ActivityDto;
 import java.util.List;
 
 public interface ActivityService {
-    List<ActivityDto> getAll();
-
-    ActivityDto getById(Long id);
-
-    ActivityDto create(ActivityDto activityDto);
-
-    ActivityDto update(Long id, ActivityDto activityDto);
-
-    void delete(Long id);
+    ActivityDto createActivity(ActivityDto dto);
+    ActivityDto getActivityById(Long id);
+    List<ActivityDto> getAllActivities();
+    ActivityDto updateActivity(Long id, ActivityDto dto);
+    void deleteActivity(Long id);
 }

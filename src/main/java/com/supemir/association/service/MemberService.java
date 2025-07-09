@@ -5,13 +5,9 @@ import com.supemir.association.dto.MemberDto;
 import java.util.List;
 
 public interface MemberService {
-    List<MemberDto> getAll();
-
-    MemberDto getById(Long id);
-
-    MemberDto create(MemberDto memberDto);
-
-    MemberDto update(Long id, MemberDto memberDto);
-
-    void delete(Long id);
+    MemberDto createMember(MemberDto dto);
+    MemberDto getMemberById(Long id);
+    List<MemberDto> getAllMembers();
+    MemberDto updateMember(Long id, MemberDto dto);
+    void deleteMember(Long id);
 }

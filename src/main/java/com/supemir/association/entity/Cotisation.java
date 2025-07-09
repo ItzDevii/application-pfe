@@ -5,21 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "document")
+@Table(name = "cotisation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Document {
+public class Cotisation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private Double amount;
 
-    @Column(nullable = false)
-    private String url;
+    @Column(name = "date_paiement", nullable = false)
+    private LocalDate paymentDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_membre", nullable = false)

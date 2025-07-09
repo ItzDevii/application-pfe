@@ -8,6 +8,7 @@ import com.supemir.association.repository.DocumentRepository;
 import com.supemir.association.service.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,40 +20,43 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentMapper documentMapper;
 
     @Override
-    public List<DocumentDto> getAll() {
-        return documentRepository.findAll()
-                .stream()
+    @Transactional
+    public DocumentDto createDocument(DocumentDto dto) {
+        Document doc = documentMapper.toEntity(dto);
+        Document saved = documentRepository.save(doc);
+        return documentMapper.toDto(saved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DocumentDto getDocumentById(Long id) {
+        Document doc = documentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found with id " + id));
+        return documentMapper.toDto(doc);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DocumentDto> getAllDocuments() {
+        return documentRepository.findAll().stream()
                 .map(documentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public DocumentDto getById(Long id) {
-        Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Document not found with id " + id));
-        return documentMapper.toDto(document);
-    }
-
-    @Override
-    public DocumentDto create(DocumentDto dto) {
-        Document document = documentMapper.toEntity(dto);
-        Document saved = documentRepository.save(document);
-        return documentMapper.toDto(saved);
-    }
-
-    @Override
-    public DocumentDto update(Long id, DocumentDto dto) {
+    @Transactional
+    public DocumentDto updateDocument(Long id, DocumentDto dto) {
         Document existing = documentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Document not found with id " + id));
-
-        Document updated = documentMapper.toEntity(dto);
-        updated.setId(existing.getId());
-
-        return documentMapper.toDto(documentRepository.save(updated));
+        Document updatedEntity = documentMapper.toEntity(dto);
+        updatedEntity.setId(existing.getId());
+        Document updated = documentRepository.save(updatedEntity);
+        return documentMapper.toDto(updated);
     }
 
     @Override
-    public void delete(Long id) {
+    @Transactional
+    public void deleteDocument(Long id) {
         if (!documentRepository.existsById(id)) {
             throw new ResourceNotFoundException("Document not found with id " + id);
         }

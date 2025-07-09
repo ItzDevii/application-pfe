@@ -3,38 +3,35 @@ package com.supemir.association.entity;
 import com.supemir.association.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "members")
+@Table(name = "membre")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 public class Member {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "nom", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "prenom", nullable = false)
     private String lastName;
 
-    @Column(name = "join_date", nullable = false)
+    @Column(name = "date_adhesion", nullable = false)
     private LocalDate joinDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private MemberStatus memberStatus;
+    @Column(name = "statut", nullable = false)
+    private MemberStatus status;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_utilisateur", nullable = false)
     private User user;
 }

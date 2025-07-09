@@ -1,58 +1,64 @@
-CREATE TABLE users (
-    id BIGSERIAL PRIMARY KEY,
+-- USER TABLE
+CREATE TABLE utilisateur (
+    id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE members (
-    id BIGSERIAL PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    join_date DATE NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    user_id BIGINT UNIQUE,
-    CONSTRAINT fk_member_user FOREIGN KEY (user_id) REFERENCES users(id)
+-- MEMBER TABLE
+CREATE TABLE membre (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    date_adhesion DATE NOT NULL,
+    statut VARCHAR(20) NOT NULL,
+    id_utilisateur INTEGER NOT NULL REFERENCES utilisateur(id)
 );
 
-CREATE TABLE contributions (
-    id BIGSERIAL PRIMARY KEY,
-    amount NUMERIC(10, 2) NOT NULL CHECK (amount > 0),
-    date DATE NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    member_id BIGINT NOT NULL,
-    CONSTRAINT fk_contribution_member FOREIGN KEY (member_id) REFERENCES members(id)
+-- COTISATION TABLE
+CREATE TABLE cotisation (
+    id SERIAL PRIMARY KEY,
+    amount NUMERIC(10,2) NOT NULL,
+    date_paiement DATE NOT NULL,
+    id_membre INTEGER NOT NULL REFERENCES membre(id)
 );
 
-CREATE TABLE activities (
-    id BIGSERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    date DATE NOT NULL
+-- ACTIVITY TABLE
+CREATE TABLE activite (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    date_evenement DATE NOT NULL,
+    description VARCHAR(500)
 );
 
-CREATE TABLE participations (
-    id BIGSERIAL PRIMARY KEY,
-    member_id BIGINT NOT NULL,
-    activity_id BIGINT NOT NULL,
-    CONSTRAINT fk_participation_member FOREIGN KEY (member_id) REFERENCES members(id),
-    CONSTRAINT fk_participation_activity FOREIGN KEY (activity_id) REFERENCES activities(id)
+-- PARTICIPATION TABLE
+CREATE TABLE participation (
+    id SERIAL PRIMARY KEY,
+    id_membre INTEGER NOT NULL REFERENCES membre(id),
+    id_activite INTEGER NOT NULL REFERENCES activite(id),
+    date_inscription DATE NOT NULL
 );
 
-CREATE TABLE documents (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(100) NOT NULL,
-    path TEXT NOT NULL,
-    uploaded_by BIGINT,
-    CONSTRAINT fk_document_user FOREIGN KEY (uploaded_by) REFERENCES users(id)
+-- DOCUMENT TABLE
+CREATE TABLE document (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    url VARCHAR(500) NOT NULL,
+    id_membre INTEGER NOT NULL REFERENCES membre(id)
 );
 
-CREATE TABLE audit_logs (
-    id BIGSERIAL PRIMARY KEY,
+-- AUDIT LOG TABLE
+CREATE TABLE journal (
+    id SERIAL PRIMARY KEY,
     action VARCHAR(255) NOT NULL,
-    target_entity VARCHAR(255) NOT NULL,
-    timestamp TIMESTAMP NOT NULL,
-    user_id BIGINT,
-    CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id)
+    timestamp DATE NOT NULL,
+    id_utilisateur INTEGER NOT NULL REFERENCES utilisateur(id)
 );
+
+-- Optional: add CHECK constraints for enums
+ALTER TABLE utilisateur
+  ADD CONSTRAINT chk_role CHECK (role IN ('ADMIN','USER'));
+
+ALTER TABLE membre
+  ADD CONSTRAINT chk_statut CHECK (statut IN ('ACTIVE','INACTIVE','SUSPENDED'));

@@ -1,6 +1,5 @@
 package com.supemir.association.dto;
 
-import com.supemir.association.enums.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,9 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDto {
+public class CotisationDto {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private LocalDate joinDate;
-    private String status;
-    private Long userId;
+    private Double amount;
+    private LocalDate paymentDate;
+    private Long memberId;
 }

@@ -5,11 +5,9 @@ import com.supemir.association.dto.AuditLogDto;
 import java.util.List;
 
 public interface AuditLogService {
-    List<AuditLogDto> getAll();
-
-    AuditLogDto getById(Long id);
-
-    AuditLogDto create(AuditLogDto auditLogDto);
-
-    void delete(Long id);
+    AuditLogDto createAuditLog(AuditLogDto dto);
+    AuditLogDto getAuditLogById(Long id);
+    List<AuditLogDto> getAllAuditLogs();
+    AuditLogDto updateAuditLog(Long id, AuditLogDto dto);
+    void deleteAuditLog(Long id);
 }

@@ -8,6 +8,7 @@ import com.supemir.association.repository.ActivityRepository;
 import com.supemir.association.service.ActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,40 +20,43 @@ public class ActivityServiceImpl implements ActivityService {
     private final ActivityMapper activityMapper;
 
     @Override
-    public List<ActivityDto> getAll() {
-        return activityRepository.findAll()
-                .stream()
-                .map(activityMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ActivityDto getById(Long id) {
-        Activity activity = activityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id));
-        return activityMapper.toDto(activity);
-    }
-
-    @Override
-    public ActivityDto create(ActivityDto dto) {
+    @Transactional
+    public ActivityDto createActivity(ActivityDto dto) {
         Activity activity = activityMapper.toEntity(dto);
         Activity saved = activityRepository.save(activity);
         return activityMapper.toDto(saved);
     }
 
     @Override
-    public ActivityDto update(Long id, ActivityDto dto) {
-        Activity existing = activityRepository.findById(id)
+    @Transactional(readOnly = true)
+    public ActivityDto getActivityById(Long id) {
+        Activity act = activityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id));
-
-        Activity updated = activityMapper.toEntity(dto);
-        updated.setId(existing.getId());
-
-        return activityMapper.toDto(activityRepository.save(updated));
+        return activityMapper.toDto(act);
     }
 
     @Override
-    public void delete(Long id) {
+    @Transactional(readOnly = true)
+    public List<ActivityDto> getAllActivities() {
+        return activityRepository.findAll().stream()
+                .map(activityMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public ActivityDto updateActivity(Long id, ActivityDto dto) {
+        Activity existing = activityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id));
+        Activity updatedEntity = activityMapper.toEntity(dto);
+        updatedEntity.setId(existing.getId());
+        Activity updated = activityRepository.save(updatedEntity);
+        return activityMapper.toDto(updated);
+    }
+
+    @Override
+    @Transactional
+    public void deleteActivity(Long id) {
         if (!activityRepository.existsById(id)) {
             throw new ResourceNotFoundException("Activity not found with id " + id);
         }

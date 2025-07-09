@@ -1,17 +1,15 @@
 package com.supemir.association.dto;
 
+import com.supemir.association.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuditLogDto {
-    private Long id;
-    private String action;
-    private LocalDate timestamp;
-    private Long userId;
+public class CreateUserDto {
+    private String username;
+    private String password;
+    private String role;
 }

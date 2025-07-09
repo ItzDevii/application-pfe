@@ -4,7 +4,9 @@ import com.supemir.association.dto.ActivityDto;
 import com.supemir.association.service.ActivityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,33 +14,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/activities")
 @RequiredArgsConstructor
+@Validated
 public class ActivityController {
-
     private final ActivityService activityService;
 
-    @GetMapping
-    public ResponseEntity<List<ActivityDto>> getAll() {
-        return ResponseEntity.ok(activityService.getAll());
+    @PostMapping
+    public ResponseEntity<ActivityDto> create(@Valid @RequestBody ActivityDto dto) {
+        ActivityDto created = activityService.createActivity(dto);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ActivityDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(activityService.getById(id));
+    public ResponseEntity<ActivityDto> get(@PathVariable Long id) {
+        return ResponseEntity.ok(activityService.getActivityById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<ActivityDto> create(@Valid @RequestBody ActivityDto activityDto) {
-        return ResponseEntity.ok(activityService.create(activityDto));
+    @GetMapping
+    public ResponseEntity<List<ActivityDto>> getAll() {
+        return ResponseEntity.ok(activityService.getAllActivities());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityDto> update(@PathVariable Long id, @Valid @RequestBody ActivityDto activityDto) {
-        return ResponseEntity.ok(activityService.update(id, activityDto));
+    public ResponseEntity<ActivityDto> update(@PathVariable Long id,
+                                              @Valid @RequestBody ActivityDto dto) {
+        return ResponseEntity.ok(activityService.updateActivity(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        activityService.delete(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        activityService.deleteActivity(id);
     }
 }

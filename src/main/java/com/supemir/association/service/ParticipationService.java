@@ -5,13 +5,9 @@ import com.supemir.association.dto.ParticipationDto;
 import java.util.List;
 
 public interface ParticipationService {
-    List<ParticipationDto> getAll();
-
-    ParticipationDto getById(Long id);
-
-    ParticipationDto create(ParticipationDto participationDto);
-
-    ParticipationDto update(Long id, ParticipationDto participationDto);
-
-    void delete(Long id);
+    ParticipationDto createParticipation(ParticipationDto dto);
+    ParticipationDto getParticipationById(Long id);
+    List<ParticipationDto> getAllParticipations();
+    ParticipationDto updateParticipation(Long id, ParticipationDto dto);
+    void deleteParticipation(Long id);
 }

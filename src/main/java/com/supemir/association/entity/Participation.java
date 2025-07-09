@@ -2,27 +2,29 @@ package com.supemir.association.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "participations")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Participation {
+import java.time.LocalDate;
 
+@Entity
+@Table(name = "participation")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Participation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_membre", nullable = false)
     private Member member;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "activity_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_activite", nullable = false)
     private Activity activity;
+
+    @Column(name = "date_inscription", nullable = false)
+    private LocalDate signupDate;
 }
