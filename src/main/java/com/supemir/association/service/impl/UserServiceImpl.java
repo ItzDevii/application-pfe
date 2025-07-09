@@ -8,6 +8,7 @@ import com.supemir.association.mapper.UserMapper;
 import com.supemir.association.repository.UserRepository;
 import com.supemir.association.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +20,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public UserDto createUser(CreateUserDto dto) {
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User saved = userRepository.save(user);
         return userMapper.toDto(saved);
     }
@@ -50,7 +53,7 @@ public class UserServiceImpl implements UserService {
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
         existing.setUsername(dto.getUsername());
-        existing.setPassword(dto.getPassword());
+        existing.setPassword(passwordEncoder.encode(dto.getPassword()));
         existing.setRole(userMapper.toEntity(dto).getRole());
         User updated = userRepository.save(existing);
         return userMapper.toDto(updated);
