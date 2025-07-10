@@ -1,6 +1,8 @@
 package com.supemir.association.dto;
 
 import com.supemir.association.enums.Role;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+    @NotNull
     private Long id;
+
+    @NotBlank
     private String username;
-    private String role; // matches Role enum
+
+    @NotNull
+    private String role;
 }
