@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActivityDto {
-    @NotNull
     private Long id;
 
     @NotBlank(message = "Name is required")

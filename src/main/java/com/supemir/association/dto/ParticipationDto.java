@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParticipationDto {
-    @NotNull
     private Long id;
 
     @NotNull(message = "Member ID is required")

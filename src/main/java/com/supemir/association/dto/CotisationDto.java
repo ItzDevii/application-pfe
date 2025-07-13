@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CotisationDto {
-    @NotNull
     private Long id;
 
     @NotNull(message = "Amount is required")
