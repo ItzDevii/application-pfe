@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuditLogDto {
-    @NotNull
     private Long id;
 
     @NotBlank(message = "Action is required")

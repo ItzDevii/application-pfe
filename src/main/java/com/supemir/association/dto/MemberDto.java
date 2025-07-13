@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
-    @NotNull
     private Long id;
 
     @NotBlank(message = "First name is required")

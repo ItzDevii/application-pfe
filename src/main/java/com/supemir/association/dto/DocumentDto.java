@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentDto {
-    @NotNull
     private Long id;
 
     @NotBlank(message = "Document name is required")
