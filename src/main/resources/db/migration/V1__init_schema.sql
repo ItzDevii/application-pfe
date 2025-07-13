@@ -56,7 +56,7 @@ CREATE TABLE journal (
     id_utilisateur INTEGER NOT NULL REFERENCES utilisateur(id)
 );
 
--- Optional: add CHECK constraints for enums
+-- Add CHECK constraints for enums
 ALTER TABLE utilisateur
   ADD CONSTRAINT chk_role CHECK (role IN ('ADMIN','USER'));
 
