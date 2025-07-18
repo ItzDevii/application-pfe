@@ -31,7 +31,4 @@ public class Member {
     @Column(name = "statut", nullable = false)
     private MemberStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_utilisateur", nullable = false)
-    private User user;
 }

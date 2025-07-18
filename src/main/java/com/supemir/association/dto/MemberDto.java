@@ -27,7 +27,4 @@ public class MemberDto {
 
     @NotBlank(message = "Status is required")
     private String status;
-
-    @NotNull(message = "User ID is required")
-    private Long userId;
 }
