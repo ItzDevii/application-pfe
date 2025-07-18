@@ -2,7 +2,6 @@ package com.supemir.association.mapper;
 
 import com.supemir.association.dto.MemberDto;
 import com.supemir.association.entity.Member;
-import com.supemir.association.entity.User;
 import com.supemir.association.enums.MemberStatus;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +15,6 @@ public class MemberMapper {
         member.setLastName(dto.getLastName());
         member.setJoinDate(dto.getJoinDate());
         member.setStatus(MemberStatus.valueOf(dto.getStatus()));
-        User user = new User();
-        user.setId(dto.getUserId());
-        member.setUser(user);
         return member;
     }
 
@@ -30,7 +26,6 @@ public class MemberMapper {
         dto.setLastName(member.getLastName());
         dto.setJoinDate(member.getJoinDate());
         dto.setStatus(member.getStatus().name());
-        dto.setUserId(member.getUser().getId());
         return dto;
     }
 }

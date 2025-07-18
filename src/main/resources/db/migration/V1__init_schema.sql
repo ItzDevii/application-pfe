@@ -12,8 +12,7 @@ CREATE TABLE membre (
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
     date_adhesion DATE NOT NULL,
-    statut VARCHAR(20) NOT NULL,
-    id_utilisateur INTEGER NOT NULL REFERENCES utilisateur(id)
+    statut VARCHAR(20) NOT NULL
 );
 
 -- COTISATION TABLE

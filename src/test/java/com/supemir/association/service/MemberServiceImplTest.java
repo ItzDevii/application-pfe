@@ -2,9 +2,7 @@ package com.supemir.association.service;
 
 import com.supemir.association.dto.MemberDto;
 import com.supemir.association.entity.Member;
-import com.supemir.association.entity.User;
 import com.supemir.association.enums.MemberStatus;
-import com.supemir.association.enums.Role;
 import com.supemir.association.exception.ResourceNotFoundException;
 import com.supemir.association.mapper.MemberMapper;
 import com.supemir.association.repository.MemberRepository;
@@ -43,11 +41,10 @@ class MemberServiceImplTest {
     @BeforeEach
     void setUp() {
         LocalDate date = LocalDate.of(2024, 1, 1);
-        User user = new User(1L, "u", "p", Role.USER);
-        dto = new MemberDto(null, "fn", "ln", date, "ACTIVE", 1L);
-        entity = new Member(null, "fn", "ln", date, MemberStatus.ACTIVE, user);
-        savedEntity = new Member(1L, "fn", "ln", date, MemberStatus.ACTIVE, user);
-        savedDto = new MemberDto(1L, "fn", "ln", date, "ACTIVE", 1L);
+        dto = new MemberDto(null, "fn", "ln", date, "ACTIVE");
+        entity = new Member(null, "fn", "ln", date, MemberStatus.ACTIVE);
+        savedEntity = new Member(1L, "fn", "ln", date, MemberStatus.ACTIVE);
+        savedDto = new MemberDto(1L, "fn", "ln", date, "ACTIVE");
     }
 
     @Test
@@ -91,11 +88,10 @@ class MemberServiceImplTest {
 
     @Test
     void updateMember_shouldUpdateAndReturnDto() {
-        MemberDto updateDto = new MemberDto(null, "new", "name", LocalDate.of(2024,2,2), "INACTIVE", 1L);
-        User user = new User(1L, "u", "p", Role.USER);
-        Member updateEntity = new Member(null, "new", "name", LocalDate.of(2024,2,2), MemberStatus.INACTIVE, user);
-        Member updatedEntity = new Member(1L, "new", "name", LocalDate.of(2024,2,2), MemberStatus.INACTIVE, user);
-        MemberDto updatedDto = new MemberDto(1L, "new", "name", LocalDate.of(2024,2,2), "INACTIVE", 1L);
+        MemberDto updateDto = new MemberDto(null, "new", "name", LocalDate.of(2024,2,2), "INACTIVE");
+        Member updateEntity = new Member(null, "new", "name", LocalDate.of(2024,2,2), MemberStatus.INACTIVE);
+        Member updatedEntity = new Member(1L, "new", "name", LocalDate.of(2024,2,2), MemberStatus.INACTIVE);
+        MemberDto updatedDto = new MemberDto(1L, "new", "name", LocalDate.of(2024,2,2), "INACTIVE");
 
         when(memberRepository.findById(1L)).thenReturn(Optional.of(savedEntity));
         when(memberMapper.toEntity(updateDto)).thenReturn(updateEntity);
