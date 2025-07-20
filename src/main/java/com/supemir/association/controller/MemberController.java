@@ -19,7 +19,6 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<MemberDto> createMember(@Valid @RequestBody MemberDto dto) {
         MemberDto created = memberService.createMember(dto);
@@ -36,14 +35,12 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getAllMembers());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<MemberDto> updateMember(@PathVariable Long id,
                                                   @Valid @RequestBody MemberDto dto) {
         return ResponseEntity.ok(memberService.updateMember(id, dto));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMember(@PathVariable Long id) {

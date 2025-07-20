@@ -41,7 +41,6 @@ public class ParticipationController {
         return ResponseEntity.ok(participationService.updateParticipation(id, dto));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
